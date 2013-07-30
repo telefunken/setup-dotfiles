@@ -1,0 +1,46 @@
+#
+if [ -f ~/.gitconfig ];then
+    if [ ! -f ~/.gitconfig.ORIGINAL ]; then
+        echo "Making backup of your .gitconfig file"
+        cp -f ~/.gitconfig ~/.gitconfig.ORIGINAL
+    else
+        echo "The backup of the original .gitconfig already exist"
+    fi
+    if [ $? != 0 ];then
+        echo "Can't create the backup of your gitconfig file"
+    fi
+fi
+
+#
+if [ -e ~/.gitconfig ]; then
+    echo "Adding git alias"
+    git config --global alias.br branch
+    git config --global alias.ci commit
+    git config --global alias.pom "push origin master"
+    git config --global alias.plm "pull origin master"
+    git config --global alias.co checkout
+    git config --global alias.st status
+    git config --global alias.df diff
+    git config --global alias.undo "reset --soft HEAD^"
+    git config --global alias.gl "log --graph --pretty=oneline --abbrev-commit"
+    git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+    git config --global alias.type cat-file -t
+    git config --global alias.dump cat-file -p
+
+    echo "Adding git color configs"
+    git config --global color.branch auto
+    git config --global color.diff auto
+    git config --global color.interactive auto
+    git config --global color.status auto
+    git config --global color.ui auto
+
+    if [ $? != 0 ];then
+        echo "Can't add git new configs"
+    fi
+    else
+        echo "The git configs wasn't add, gitconfig file doesn't exist"
+fi
+
+echo
+echo "Install Completed"
+echo
